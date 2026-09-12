@@ -44,37 +44,40 @@ export function SourceCiteList({
   if (!items.length) return null
   return (
     <div className="kh-cite-list">
-      {items.map((s, i) => {
-        const index = s.index
-        const active = index != null && activeIndex === index
-        return (
-          <Link
-            key={`${s.documentId}-${index ?? i}`}
-            id={index != null ? citeDomId(scope, index) : undefined}
-            className={`kh-cite${active ? ' active' : ''}`}
-            to={`/documents/${s.documentId}`}
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => {
-              if (index != null) onSelect?.(index)
-            }}
-            onMouseEnter={() => {
-              if (index != null) onSelect?.(index)
-            }}
-            onMouseLeave={() => onSelect?.(null)}
-          >
-            <FileTypeIcon name={s.documentTitle} />
-            <div className="kh-cite-body">
-              <div className="kh-cite-title">
-                {index != null ? `[${index}] ` : ''}
-                {s.documentTitle}
+      <div className="kh-cite-list-title">参考资料</div>
+      <div className="kh-cite-rail">
+        {items.map((s, i) => {
+          const index = s.index
+          const active = index != null && activeIndex === index
+          return (
+            <Link
+              key={`${s.documentId}-${index ?? i}`}
+              id={index != null ? citeDomId(scope, index) : undefined}
+              className={`kh-cite${active ? ' active' : ''}`}
+              to={`/documents/${s.documentId}`}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => {
+                if (index != null) onSelect?.(index)
+              }}
+              onMouseEnter={() => {
+                if (index != null) onSelect?.(index)
+              }}
+              onMouseLeave={() => onSelect?.(null)}
+            >
+              <FileTypeIcon name={s.documentTitle} />
+              <div className="kh-cite-body">
+                <div className="kh-cite-title">
+                  {index != null ? `[${index}] ` : ''}
+                  {s.documentTitle}
+                </div>
+                {s.heading ? <div className="kh-cite-heading">{s.heading}</div> : null}
+                {s.excerpt ? <div className="kh-cite-meta">{s.excerpt}</div> : null}
               </div>
-              {s.heading ? <div className="kh-cite-heading">{s.heading}</div> : null}
-              {s.excerpt ? <div className="kh-cite-excerpt">{s.excerpt}</div> : null}
-            </div>
-          </Link>
-        )
-      })}
+            </Link>
+          )
+        })}
+      </div>
     </div>
   )
 }
