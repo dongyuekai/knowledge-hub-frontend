@@ -16,6 +16,7 @@ import type {
   RoleItem,
   SearchHit,
   TeamItem,
+  TeamTreeNode,
   UserStats,
   UserVO,
 } from "../types";
@@ -160,18 +161,21 @@ export const permissionApi = {
 
 export const teamApi = {
   page: (query: Record<string, string | number | undefined>) => {
-    const params = new URLSearchParams()
+    const params = new URLSearchParams();
     for (const [k, v] of Object.entries(query)) {
-      if (v !== undefined && v !== '') params.set(k, String(v))
+      if (v !== undefined && v !== "") params.set(k, String(v));
     }
-    return get<PageResult<TeamItem>>(`/teams/page?${params}`)
+    return get<PageResult<TeamItem>>(`/teams/page?${params}`);
   },
-  tree: () => get<unknown[]>('/teams/tree'),
-  create: (body: Record<string, unknown>) => post<TeamItem>('/teams', body),
-  update: (id: string, body: Record<string, unknown>) => put<TeamItem>(`/teams/${id}`, body),
+  tree: () => get<TeamTreeNode[]>("/teams/tree"),
+  mine: () => get<TeamItem[]>("/teams/mine"),
+  create: (body: Record<string, unknown>) => post<TeamItem>("/teams", body),
+  update: (id: string, body: Record<string, unknown>) =>
+    put<TeamItem>(`/teams/${id}`, body),
   remove: (id: string) => del<{ message: string }>(`/teams/${id}`),
   members: (id: string) => get<unknown[]>(`/teams/${id}/members`),
-  addMembers: (id: string, userIds: string[]) => post<unknown>(`/teams/${id}/members`, userIds),
+  addMembers: (id: string, userIds: string[]) =>
+    post<unknown>(`/teams/${id}/members`, userIds),
   removeMembers: (id: string, userIds: string[]) =>
     del<unknown>(`/teams/${id}/members`, userIds),
-}
+};

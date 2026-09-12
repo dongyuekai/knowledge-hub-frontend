@@ -1,11 +1,12 @@
 export interface AuthUser {
-  userId: string
-  username: string
-  realName?: string | null
-  email?: string | null
-  avatar?: string | null
-  roles: string[]
-  permissions: string[]
+  userId: string;
+  username: string;
+  realName?: string | null;
+  email?: string | null;
+  avatar?: string | null;
+  roles: string[];
+  permissions: string[];
+  teamIds?: string[];
 }
 
 export interface LoginResult {
@@ -44,20 +45,22 @@ export interface DocumentItem {
 }
 
 export interface SearchHit {
-  id: string
-  title: string
-  summary?: string | null
-  categoryId?: string | null
-  tags?: string | null
-  authorId?: string | null
-  status?: number | null
-  publishTime?: string | null
-  score: number
+  id: string;
+  title: string;
+  summary?: string | null;
+  categoryId?: string | null;
+  tags?: string | null;
+  authorId?: string | null;
+  teamId?: string | null;
+  isPublic?: boolean | null;
+  status?: number | null;
+  publishTime?: string | null;
+  score: number;
   highlight: {
-    title: string[]
-    summary: string[]
-    content: string[]
-  }
+    title: string[];
+    summary: string[];
+    content: string[];
+  };
 }
 
 export interface ChunkHit {
@@ -195,6 +198,10 @@ export interface TeamItem {
   sort?: number
   status?: number
   memberCount?: number
+}
+
+export interface TeamTreeNode extends TeamItem {
+  children?: TeamTreeNode[];
 }
 
 export interface ReviewTask {
